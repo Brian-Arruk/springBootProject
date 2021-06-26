@@ -40,8 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User user(@PathVariable("id") Long id) {
-      System.out.println("O id é " + id);
+    public User user(@PathVariable("id") Long id) {      
   
       Optional<User> userFind = this.userRepository.findById(id);
   
@@ -53,13 +52,28 @@ public class UserController {
     }
   
 
-    // @PostMapping("/")
-    // public User user(@RequestBody User user) {
-    //   return this.userRepository.save(user);
-    // }
+    @PostMapping("/")
+    public User user(@RequestBody User user) {
+      return this.userRepository.save(user);
+    }
 
     @GetMapping("/list")
     public List<User> list() {
-        return users;
+        return this.userRepository.findAll();
+    }
+
+    @GetMapping("/list/{id}")
+    public List<User> listMoreThan(@PathVariable("id") Long id) {
+        return this.userRepository.findAllMoreThan(id);
+    }
+
+    @GetMapping("/list1/{id}")
+    public List<User> listMoreThan(@PathVariable("id") Long id) {
+        return this.userRepository.findByIdGreaterThan(id);
+    }
+
+    @GetMapping("/findByName/{name}")
+    public List<User> findByName(@PathVariable("name") String name) {
+        return this.userRepository.findByNameIgnoreCase(name);
     }
 }
